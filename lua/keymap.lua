@@ -24,6 +24,15 @@ function Keymap.default()
 	map("n", "<F2>", "<cmd>vertical resize +5<CR>", { desc = "Vertical resize +" })
 	map("n", "<F3>", "<cmd>horizontal resize -5<CR>", { desc = "Horizontal resize -" })
 	map("n", "<F4>", "<cmd>horizontal resize +5<CR>", { desc = "Horizontal resize +" })
+
+	map("n", "<F5>", "<cmd>Themify<CR>", { desc = "Select theme" })
+
+	-- terminal mode
+	map("t", "<A-h>", "<left>")
+	map("t", "<A-l>", "<right>")
+	map("t", "<A-k>", "<up>")
+	map("t", "<A-j>", "<down>")
+	map("t", "<A-q>", "<C-\\><C-n>")
 end
 
 function Keymap.get_debug()

@@ -1,13 +1,19 @@
 return {
-	-- colorscheme
+	-- colorschemes
 	{
-		"folke/tokyonight.nvim",
+		'lmantw/themify.nvim',
 		lazy = false,
-		priority = 1000,
-		opts = {},
-		config = function()
-			vim.cmd([[colorscheme tokyonight-night]])
-		end,
+		priority = 999,
+		config = {
+			"folke/tokyonight.nvim",
+			"EdenEast/nightfox.nvim",
+			"sho-87/kanagawa-paper.nvim",
+			"comfysage/evergarden",
+			"datsfilipe/min-theme.nvim",
+			"datsfilipe/vesper.nvim",
+			"everviolet/nvim",
+			"ramojus/mellifluous.nvim"
+		}
 	},
 
 	-- botline
@@ -19,7 +25,7 @@ return {
 				lualine_a = { "mode" },
 				lualine_b = { "branch", "diff", "diagnostics" },
 				lualine_c = {},
-				lualine_x = { "buffers" },
+				lualine_x = { "filename" },
 				lualine_y = { "lsp_status", "filetype" },
 				lualine_z = { "location" }
 			},
