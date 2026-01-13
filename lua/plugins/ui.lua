@@ -14,7 +14,24 @@ return {
 	{
 		"nvim-lualine/lualine.nvim",
 		event = "VeryLazy",
-		opts = {},
+		opts = {
+			sections = {
+				lualine_a = { "mode" },
+				lualine_b = { "branch", "diff", "diagnostics" },
+				lualine_c = {},
+				lualine_x = { "buffers" },
+				lualine_y = { "lsp_status", "filetype" },
+				lualine_z = { "location" }
+			},
+			inactive_sections = {
+				lualine_a = {},
+				lualine_b = {},
+				lualine_c = {},
+				lualine_x = {},
+				lualine_y = {},
+				lualine_z = {}
+			},
+		},
 	},
 
 	-- whichkey

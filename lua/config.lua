@@ -32,6 +32,11 @@ end
 function Config.post()
 	-- disable snacks animations
 	vim.g.snacks_animate = false
+
+	-- disable vim status bar
+	vim.opt.laststatus = 0
+	vim.opt.cmdheight = 0
+	vim.opt.showmode = false
 end
 
 return Config

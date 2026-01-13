@@ -24,6 +24,14 @@ return {
 
 			picker = {
 				enabled = true,
+				hidden = true,
+				ignored = true,
+				sources = {
+					explorer = {
+						hidden = true,
+						ignored = true,
+					},
+				}
 			},
 
 			notifier = {
