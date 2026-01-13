@@ -2,6 +2,7 @@ require("config").pre()
 
 require("bootstrap_lazy")
 require("lazy").setup("plugins")
+require("plugins_post")
 
 require("config").post()
 require("keymap").default()

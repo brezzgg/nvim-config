@@ -46,6 +46,19 @@ function Keymap.get_debug()
 	}
 end
 
+function Keymap.get_bufferline()
+	return {
+		{ "gt",         "<Cmd>BufferLineCycleNext<CR>",  desc = "Next tab" },
+		{ "gT",         "<Cmd>BufferLineCyclePrev<CR>",  desc = "Prev tab" },
+		{ "<leader>bp", "<Cmd>BufferLineTogglePin<CR>",  desc = "Toggle Pin" },
+		{ "<leader>bb", "<Cmd>BufferLinePick<CR>",       desc = "Pick open" },
+		{ "<leader>bc", "<Cmd>BufferLinePickClose<CR>",  desc = "Pick close" },
+		{ "<leader>bC", "<Cmd>BufferLineCloseOther<CR>", desc = "Close other" },
+		{ "<leader>bh", "<Cmd>BufferLineCloseLeft<CR>",  desc = "Close other" },
+		{ "<leader>bl", "<Cmd>BufferLineCloseRight<CR>", desc = "Close other" },
+	}
+end
+
 function Keymap.get_snacks()
 	return {
 		{ "<leader><leader>", function() require("snacks").picker.smart() end,        desc = "Open picker" },

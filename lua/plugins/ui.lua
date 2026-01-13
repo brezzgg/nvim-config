@@ -55,6 +55,19 @@ return {
 		},
 	},
 
+	-- bufferline
+	{
+		'akinsho/bufferline.nvim',
+		version = "*",
+		dependencies = 'nvim-tree/nvim-web-devicons',
+		event = "BufEnter",
+		keys = require("keymap").get_bufferline(),
+		config = function()
+			vim.opt.termguicolors = true
+			require("bufferline").setup {}
+		end
+	},
+
 	-- icons
 	{ 'nvim-mini/mini.nvim' },
 	{ "nvim-tree/nvim-web-devicons", lazy = false },
