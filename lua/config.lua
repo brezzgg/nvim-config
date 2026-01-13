@@ -9,6 +9,7 @@ function Config.pre()
 	vim.opt.shiftwidth = 4
 	vim.opt.winborder = "rounded"
 	vim.opt.clipboard = "unnamedplus"
+	vim.opt.cursorline = true
 
 	vim.g.mapleader = " "
 
