@@ -87,19 +87,23 @@ end
 
 function Keymap.get_snacks()
 	return {
-		{ "<leader><leader>", function() require("snacks").picker.smart() end,                       desc = "Open picker" },
-		{ "<leader>ts",       function() require("snacks").terminal.toggle() end,                    desc = "Split with terminal" },
-		{ "<leader>fb",       function() require("snacks").picker.buffers() end,                     desc = "Show buffers" },
-		{ "<leader>fg",       function() require("snacks").picker.grep() end,                        desc = "Grep in files" },
-		{ "<leader>fd",       function() require("snacks").dashboard() end,                          desc = "Open dashboard" },
-		{ "<leader>gi",       function()
-			require("snacks").lazygit(); vim.fn.feedkeys("i", "n")
-		end,                                                                                         desc = "Open lazygit" },
-		{ "<leader>gd",       function() require("snacks").picker.git_diff() end,                    desc = "Git diff" },
-		{ "<leader>gs",       function() require("snacks").picker.git_status() end,                  desc = "Git status" },
-		{ "<leader>gl",       function() require("snacks").picker.git_log() end,                     desc = "Git log" },
-		{ "<leader>gf",       function() require("snacks").picker.git_files() end,                   desc = "Git files" },
-		{ "<leader>gb",       function() require("snacks").picker.git_branches() end,                desc = "Git branches" },
+		{ "<leader><leader>", function() require("snacks").picker.smart() end,    desc = "Open picker" },
+		{ "<leader>ts",       function() require("snacks").terminal.toggle() end, desc = "Split with terminal" },
+		{ "<leader>fb",       function() require("snacks").picker.buffers() end,  desc = "Show buffers" },
+		{ "<leader>fg",       function() require("snacks").picker.grep() end,     desc = "Grep in files" },
+		{ "<leader>fd",       function() require("snacks").dashboard() end,       desc = "Open dashboard" },
+		{
+			"<leader>gi",
+			function()
+				require("snacks").lazygit(); vim.fn.feedkeys("i", "n")
+			end,
+			desc = "Open lazygit"
+		},
+		{ "<leader>gd", function() require("snacks").picker.git_diff() end,     desc = "Git diff" },
+		{ "<leader>gs", function() require("snacks").picker.git_status() end,   desc = "Git status" },
+		{ "<leader>gl", function() require("snacks").picker.git_log() end,      desc = "Git log" },
+		{ "<leader>gf", function() require("snacks").picker.git_files() end,    desc = "Git files" },
+		{ "<leader>gb", function() require("snacks").picker.git_branches() end, desc = "Git branches" },
 	}
 end
 
