@@ -20,6 +20,8 @@ return {
 			explorer = {
 				enabled = true,
 				replace_netrw = true,
+				auto_close = false,
+				jump = { close = false }
 			},
 
 			picker = {
