@@ -27,12 +27,24 @@ function Keymap.default()
 
 	map("n", "<F5>", "<cmd>Themify<CR>", { desc = "Select theme" })
 
+	map("n", "<leader>no", "<cmd>NvimTreeOpen<CR>", { desc = "Open tree" })
+	map("n", "<leader>nn", "<cmd>NvimTreeFocus<CR>", { desc = "Focus tree" })
+	map("n", "<leader>nc", "<cmd>NvimTreeClose<CR>", { desc = "Close tree" })
+
+	map("n", ";", function()
+		vim.fn.feedkeys("q:", "n")
+		vim.fn.feedkeys("i", "n")
+	end, { desc = "Command history" })
+
 	-- terminal mode
-	map("t", "<A-h>", "<left>")
-	map("t", "<A-l>", "<right>")
-	map("t", "<A-k>", "<up>")
-	map("t", "<A-j>", "<down>")
-	map("t", "<A-q>", "<C-\\><C-n>")
+	map("n", "<leader>tt", function()
+		vim.cmd("term")
+	end, { desc = "Tab with terminal" })
+	map("t", "<C-h>", "<left>")
+	map("t", "<C-L>", "<right>")
+	map("t", "<C-k>", "<up>")
+	map("t", "<C-j>", "<down>")
+	map("t", "<esc><esc>", "<C-\\><C-n>")
 end
 
 function Keymap.get_debug()
@@ -40,7 +52,9 @@ function Keymap.get_debug()
 		{ "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
 		{ "<leader>dc", function() require("dap").continue() end,          desc = "Continue" },
 		{ "<F9>",       function() require("dap").continue() end,          desc = "Continue" },
+		{ "<leader>do", function() require("dap").step_over() end,         desc = "Step over" },
 		{ "<F7>",       function() require("dap").step_over() end,         desc = "Step over" },
+		{ "<leader>di", function() require("dap").step_into() end,         desc = "Step into" },
 		{ "<F8>",       function() require("dap").step_into() end,         desc = "Step into" },
 		{ "<leader>di", function() require("dapui").toggle() end,          desc = "Toggle debug ui" },
 	}
@@ -59,19 +73,33 @@ function Keymap.get_bufferline()
 	}
 end
 
+function Keymap.set_nvimtree(fn, api)
+	fn("l", api.node.open.edit, "Open")
+	fn("L", function()
+		api.node.open.edit()
+		vim.schedule(function()
+			api.tree.focus()
+		end)
+	end, "Open: Without focus")
+	fn("h", api.node.navigate.parent_close, "Close directory")
+	fn("?", api.tree.toggle_help, "Toggle help")
+end
+
 function Keymap.get_snacks()
 	return {
-		{ "<leader><leader>", function() require("snacks").picker.smart() end,        desc = "Open picker" },
-		{ "<leader>t",        function() require("snacks").terminal() end,            desc = "Open terminal" },
-		{ "<leader>n",        function() require("snacks").explorer() end,            desc = "Open explorer" },
-		{ "<leader>eb",       function() require("snacks").picker.buffers() end,      desc = "Show buffers" },
-		{ "<leader>fg",       function() require("snacks").picker.grep() end,         desc = "Grep in files" },
-		{ "<leader>gi",       function() require("snacks").lazygit() end,             desc = "Open lazygit" },
-		{ "<leader>gd",       function() require("snacks").picker.git_diff() end,     desc = "Git diff" },
-		{ "<leader>gs",       function() require("snacks").picker.git_status() end,   desc = "Git status" },
-		{ "<leader>gl",       function() require("snacks").picker.git_log() end,      desc = "Git log" },
-		{ "<leader>gf",       function() require("snacks").picker.git_files() end,    desc = "Git files" },
-		{ "<leader>gb",       function() require("snacks").picker.git_branches() end, desc = "Git branches" },
+		{ "<leader><leader>", function() require("snacks").picker.smart() end,                       desc = "Open picker" },
+		{ "<leader>ts",       function() require("snacks").terminal.toggle() end,                    desc = "Split with terminal" },
+		{ "<leader>fb",       function() require("snacks").picker.buffers() end,                     desc = "Show buffers" },
+		{ "<leader>fg",       function() require("snacks").picker.grep() end,                        desc = "Grep in files" },
+		{ "<leader>fd",       function() require("snacks").dashboard() end,                          desc = "Open dashboard" },
+		{ "<leader>gi",       function()
+			require("snacks").lazygit(); vim.fn.feedkeys("i", "n")
+		end,                                                                                         desc = "Open lazygit" },
+		{ "<leader>gd",       function() require("snacks").picker.git_diff() end,                    desc = "Git diff" },
+		{ "<leader>gs",       function() require("snacks").picker.git_status() end,                  desc = "Git status" },
+		{ "<leader>gl",       function() require("snacks").picker.git_log() end,                     desc = "Git log" },
+		{ "<leader>gf",       function() require("snacks").picker.git_files() end,                   desc = "Git files" },
+		{ "<leader>gb",       function() require("snacks").picker.git_branches() end,                desc = "Git branches" },
 	}
 end
 

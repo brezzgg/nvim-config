@@ -7,6 +7,8 @@ return {
 		keys = require("keymap").get_snacks(),
 
 		opts = {
+			explorer = { enabled = false },
+
 			bigfile = { enabled = true },
 			dashboard = { enabled = true },
 			indent = { enabled = true },
@@ -17,11 +19,7 @@ return {
 			statuscolumn = { enabled = true },
 			words = { enabled = true },
 
-			explorer = {
 				enabled = true,
-				replace_netrw = true,
-				auto_close = false,
-				jump = { close = false }
 			},
 
 			picker = {
@@ -34,6 +32,11 @@ return {
 						ignored = true,
 					},
 				}
+			},
+
+			terminal = {
+				interactive = false,
+				auto_close = true,
 			},
 
 			notifier = {
