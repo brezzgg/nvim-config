@@ -25,6 +25,7 @@ function Keymap.default()
 	map("n", "<F3>", "<cmd>horizontal resize -5<CR>", { desc = "Horizontal resize -" })
 	map("n", "<F4>", "<cmd>horizontal resize +5<CR>", { desc = "Horizontal resize +" })
 
+
 	map("n", "<F5>", "<cmd>Themify<CR>", { desc = "Select theme" })
 
 	map("n", "<leader>no", "<cmd>NvimTreeOpen<CR>", { desc = "Open tree" })
@@ -159,6 +160,27 @@ function Keymap.get_lsp()
 		["<C-k>"] = { "select_prev", "fallback" },
 		["<C-j>"] = { "select_next", "fallback" },
 	}
+end
+
+function Keymap.set_autosave(as)
+	local timeout = { timeout = 2000 }
+	vim.keymap.set("n", "<leader>es", function()
+		as.on()
+		vim.notify("Autosave: Enabled", vim.log.levels.INFO, timeout)
+		vim.g.auto_save_enabled = true
+	end, { desc = "Enable autosave" })
+	vim.keymap.set("n", "<leader>eS", function()
+		as.off()
+		vim.notify("Autosave: Disabled", vim.log.levels.INFO, timeout)
+		vim.g.auto_save_enabled = false
+	end, { desc = "Disable autosave" })
+	vim.keymap.set("n", "<leader>e<C-s>", function()
+		if vim.g.auto_save_enabled then
+			vim.notify("Autosave status: Enabled", vim.log.levels.INFO, timeout)
+		else
+			vim.notify("Autosave status: Disabled", vim.log.levels.INFO, timeout)
+		end
+	end, { desc = "Autosave status" })
 end
 
 return Keymap
