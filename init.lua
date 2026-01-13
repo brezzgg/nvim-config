@@ -5,3 +5,5 @@ require("lazy").setup("plugins")
 
 require("config").post()
 require("keymap").default()
+
+-- require("clipboard").osc52()
