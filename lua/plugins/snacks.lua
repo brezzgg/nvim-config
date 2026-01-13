@@ -10,7 +10,6 @@ return {
 			explorer = { enabled = false },
 
 			bigfile = { enabled = true },
-			dashboard = { enabled = true },
 			indent = { enabled = true },
 			input = { enabled = true },
 			quickfile = { enabled = true },
@@ -19,7 +18,11 @@ return {
 			statuscolumn = { enabled = true },
 			words = { enabled = true },
 
+			dashboard = {
 				enabled = true,
+				preset = {
+					keys = require("keymap").get_snacks_dashboard(),
+				},
 			},
 
 			picker = {

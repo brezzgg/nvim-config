@@ -103,6 +103,46 @@ function Keymap.get_snacks()
 	}
 end
 
+function Keymap.get_snacks_dashboard()
+	return {
+		{
+			icon = "󰆧",
+			key = "N",
+			desc = "New File",
+			action = function()
+				vim.ui.input({
+					prompt = "Enter file name: ",
+					default = "new.txt",
+					completion = ""
+				}, function(input)
+					if input and input ~= "" then
+						vim.cmd("edit " .. input)
+						vim.notify("Created file: " .. input, vim.log.levels.INFO)
+					else
+						vim.notify("Failed to create file: " .. input, vim.log.levels.ERROR)
+					end
+				end)
+			end
+		},
+		{ icon = "󰂺", key = "O", desc = "Open file", action = "<cmd>lua Snacks.picker.files()<CR>" },
+		{
+			icon = "",
+			key = "D",
+			desc = "Open directory",
+			action = function()
+				vim.fn.feedkeys(":cd " .. vim.fn.getcwd(), "n")
+			end
+
+		},
+		{ icon = " ", key = "E", desc = "Explorer", action = "<cmd>NvimTreeOpen<CR>" },
+		{ icon = " ", key = "R", desc = "Recent Files", action = "<cmd>lua Snacks.picker.recent()<CR>" },
+		{ icon = " ", key = "T", desc = "Select colorscheme", action = ":Themify" },
+		{ icon = "󰒲", key = "L", desc = "Lazy", action = ":Lazy" },
+		{ icon = "", key = "M", desc = "Mason", action = ":Mason" },
+		{ icon = " ", key = "Q", desc = "Quit", action = ":qa" },
+	}
+end
+
 function Keymap.get_lsp()
 	return {
 		preset = "default",
