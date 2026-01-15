@@ -86,6 +86,8 @@ function Keymap.set_nvimtree(fn, api)
 	end, "Open: Without focus")
 	fn("h", api.node.navigate.parent_close, "Close directory")
 	fn("?", api.tree.toggle_help, "Toggle help")
+	fn("'", api.node.open.preview, "Preview")
+	fn("<tab>", api.marks.toggle, "Toggle bookmark")
 end
 
 function Keymap.get_snacks()

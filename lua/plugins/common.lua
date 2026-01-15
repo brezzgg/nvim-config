@@ -10,7 +10,7 @@ return {
 	{
 		"pocco81/auto-save.nvim",
 		opts = { enabled = true },
-		config = function (_, opts)
+		config = function(_, opts)
 			local as = require("auto-save")
 			as.setup(opts)
 			vim.g.auto_save_enabled = true
@@ -41,7 +41,22 @@ return {
 				},
 			},
 			view = {
-				width = 45,
+				width = {
+					min = 30,
+					max = 50,
+				},
+				preserve_window_proportions = true,
+				adaptive_size = true,
+			},
+			diagnostics = {
+				enable = true,
+				show_on_dirs = true,
+				show_on_open_dirs = true,
+				debounce_delay = 50,
+				severity = {
+					min = vim.diagnostic.severity.HINT,
+					max = vim.diagnostic.severity.ERROR,
+				},
 			},
 			on_attach = function(bufnr)
 				require("nvim-tree.api").config.mappings.default_on_attach(bufnr)
@@ -62,6 +77,16 @@ return {
 			vim.g.loaded_netrw = 1
 			vim.g.loaded_netrwPlugin = 1
 			require("nvim-tree").setup(opts)
+			local function auto_update_path()
+				local buf = vim.api.nvim_get_current_buf()
+				local bufname = vim.api.nvim_buf_get_name(buf)
+				if bufname ~= "" and not bufname:match("NvimTree") then
+					require("nvim-tree.api").tree.find_file(vim.fn.expand("%:p"))
+				end
+			end
+			vim.api.nvim_create_autocmd("BufEnter", {
+				callback = auto_update_path
+			})
 		end,
 	},
 
