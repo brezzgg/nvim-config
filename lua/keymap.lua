@@ -57,7 +57,9 @@ function Keymap.get_debug()
 		{ "<F7>",       function() require("dap").step_over() end,         desc = "Step over" },
 		{ "<leader>di", function() require("dap").step_into() end,         desc = "Step into" },
 		{ "<F8>",       function() require("dap").step_into() end,         desc = "Step into" },
-		{ "<leader>di", function() require("dapui").toggle() end,          desc = "Toggle debug ui" },
+		{ "<leader>du", function() require("dapui").toggle() end,          desc = "Toggle debug ui" },
+		{ "<leader>dC", function() require("dapui").terminate() end,       desc = "Terminate" },
+		{ "<leader>dd", function() require("dapui").disconnect() end,      desc = "Disconnect" },
 	}
 end
 

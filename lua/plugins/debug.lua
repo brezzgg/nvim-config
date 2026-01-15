@@ -17,6 +17,14 @@ return {
 
 			table.insert(dap.configurations.go, {
 				type = "go",
+				name = "Attach remote",
+				request = "attach",
+				mode = "remote",
+				port = 50000,
+			})
+
+			table.insert(dap.configurations.go, {
+				type = "go",
 				name = "Debug file",
 				request = "launch",
 				program = function()
@@ -25,14 +33,6 @@ return {
 			})
 
 			dapui.setup()
-			dap.listeners.before.attach.dapui_config =
-				function() dapui.open() end
-			dap.listeners.before.launch.dapui_config =
-				function() dapui.open() end
-			dap.listeners.before.event_terminated.dapui_config =
-				function() dapui.close() end
-			dap.listeners.before.event_exited.dapui_config =
-				function() dapui.close() end
 		end,
 	},
 }
