@@ -45,7 +45,8 @@ function Keymap.default()
 	map("t", "<C-L>", "<right>")
 	map("t", "<C-k>", "<up>")
 	map("t", "<C-j>", "<down>")
-	map("t", "<esc><esc>", "<C-\\><C-n>")
+	map("t", "<esc>", "<C-\\><C-n>")
+	map("t", "<A-[>", "<esc>")
 end
 
 function Keymap.get_debug()

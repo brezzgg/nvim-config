@@ -40,6 +40,17 @@ return {
 			terminal = {
 				interactive = false,
 				auto_close = true,
+				win = {
+					keys = {
+						term_normal = {
+							"<esc>",
+							function ()
+								vim.cmd("stopinsert")
+							end,
+							mode = "t",
+						}
+					}
+				}
 			},
 
 			notifier = {
