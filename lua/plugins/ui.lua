@@ -16,16 +16,31 @@ return {
 		}
 	},
 
-	-- botline
+	-- lualine
 	{
 		"nvim-lualine/lualine.nvim",
 		event = "VeryLazy",
 		opts = {
+			options = {
+				globalstatus = 3,
+				disabled_filetypes = {
+					winbar = {
+						"snacks_dashboard",
+						"NvimTree",
+					},
+				},
+			},
+			winbar = {
+				lualine_c = { "filename" },
+			},
+			inactive_winbar = {
+				lualine_c = { "filename" },
+			},
 			sections = {
 				lualine_a = { "mode" },
 				lualine_b = { "branch", "diff", "diagnostics" },
 				lualine_c = {},
-				lualine_x = { "filename" },
+				lualine_x = {},
 				lualine_y = { "lsp_status", "filetype" },
 				lualine_z = { "location" }
 			},
@@ -45,14 +60,6 @@ return {
 		"folke/which-key.nvim",
 		event = "VeryLazy",
 		opts = {},
-		keys = {
-			{
-				"<leader>?",
-				function()
-					require("which-key").show({ global = false })
-				end,
-			},
-		},
 	},
 
 	-- icons

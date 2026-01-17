@@ -28,7 +28,16 @@ function Keymap.default()
 	map("n", "gt", "<cmd>bnext<cr>", { noremap = true, silent = true, desc = "Next buffer" })
 	map("n", "gT", "<cmd>bprev<cr>", { noremap = true, silent = true, desc = "Prev buffer" })
 
-	map("n", "<F5>", "<cmd>Themify<CR>", { desc = "Select theme" })
+	map("n", "?", "<cmd>WhichKey<cr>", { desc = "Global which key" })
+
+	-- autoindent a
+	map("n", "a", function()
+		local line = vim.api.nvim_get_current_line()
+		if line:match("^%s*$") then
+			return '"_cc'
+		end
+		return "a"
+	end, { expr = true, noremap = true })
 
 	-- smart nvimtree focus
 	map("n", "<leader>n", function()
@@ -41,12 +50,12 @@ function Keymap.default()
 	map("n", "<leader>No", "<cmd>NvimTreeOpen<CR>", { desc = "Open tree" })
 	map("n", "<leader>Nc", "<cmd>NvimTreeClose<CR>", { desc = "Close tree" })
 
-	map("n", ";", function()
+	map("n", "<C-;>", function()
 		vim.fn.feedkeys("q:", "n")
 		vim.fn.feedkeys("i", "n")
 	end, { desc = "Command history" })
 
-	-- terminal mode
+	-- terminal mod
 	map("n", "<leader>tt", function()
 		vim.cmd("term")
 	end, { desc = "Tab with terminal" })
@@ -56,6 +65,18 @@ function Keymap.default()
 	map("t", "<C-j>", "<down>")
 	map("t", "<esc>", "<C-\\><C-n>")
 	map("t", "<A-[>", "<esc>")
+end
+
+function Keymap.set_cmp(cmp)
+	return {
+		["<C-n>"] = cmp.mapping.complete(),
+		["<C-b>"] = cmp.mapping.scroll_docs(-4),
+		["<C-f>"] = cmp.mapping.scroll_docs(4),
+		["<C-e>"] = cmp.mapping.abort(),
+		["<C-l>"] = cmp.mapping.confirm({ select = true }),
+		["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+		["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+	}
 end
 
 function Keymap.get_debug()
@@ -145,7 +166,6 @@ function Keymap.get_snacks_dashboard()
 			action = function()
 				vim.fn.feedkeys(":cd " .. vim.fn.getcwd(), "n")
 			end
-
 		},
 		{ icon = " ", key = "E", desc = "Explorer", action = "<cmd>NvimTreeOpen<CR>" },
 		{ icon = " ", key = "R", desc = "Recent Files", action = "<cmd>lua Snacks.picker.recent()<CR>" },
