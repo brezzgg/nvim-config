@@ -56,15 +56,12 @@ function Keymap.default()
 	end, { desc = "Command history" })
 
 	-- terminal mod
-	map("n", "<leader>tt", function()
-		vim.cmd("term")
-	end, { desc = "Tab with terminal" })
-	map("t", "<C-h>", "<left>")
-	map("t", "<C-L>", "<right>")
-	map("t", "<C-k>", "<up>")
-	map("t", "<C-j>", "<down>")
-	map("t", "<esc>", "<C-\\><C-n>")
-	map("t", "<A-[>", "<esc>")
+	map("n", "<leader>t", function()
+		require("terminal").float_toggle()
+	end, { desc = "Float terminal toggle" })
+	map("n", "<leader>T", function()
+		require("terminal").bot_toggle()
+	end, { desc = "Bot terminal toggle" })
 end
 
 function Keymap.set_cmp(cmp)
