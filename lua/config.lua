@@ -11,20 +11,21 @@ function Config.pre()
 	vim.opt.clipboard = "unnamedplus"
 	vim.opt.cursorline = true
 	vim.opt.equalalways = false
+	vim.opt.guicursor = "a:block"
 
 	vim.g.mapleader = " "
 
+
+	vim.g.loaded_netrw = 1
+	vim.g.loaded_netrwPlugin = 1
+
 	-- yank highlight
-	local ag = vim.api.nvim_create_augroup
-
-	local highlight_group = ag('YankHighlight', { clear = true })
-
 	vim.api.nvim_create_autocmd('TextYankPost', {
 		pattern = '*',
 		callback = function()
 			vim.highlight.on_yank({ timeout = 170 })
 		end,
-		group = highlight_group,
+		group = vim.api.nvim_create_augroup('YankHighlight', { clear = true }),
 	})
 
 	-- lsp

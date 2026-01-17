@@ -25,12 +25,21 @@ function Keymap.default()
 	map("n", "<F3>", "<cmd>horizontal resize -5<CR>", { desc = "Horizontal resize -" })
 	map("n", "<F4>", "<cmd>horizontal resize +5<CR>", { desc = "Horizontal resize +" })
 
+	map("n", "gt", "<cmd>bnext<cr>", { noremap = true, silent = true, desc = "Next buffer" })
+	map("n", "gT", "<cmd>bprev<cr>", { noremap = true, silent = true, desc = "Prev buffer" })
 
 	map("n", "<F5>", "<cmd>Themify<CR>", { desc = "Select theme" })
 
-	map("n", "<leader>no", "<cmd>NvimTreeOpen<CR>", { desc = "Open tree" })
-	map("n", "<leader>nn", "<cmd>NvimTreeFocus<CR>", { desc = "Focus tree" })
-	map("n", "<leader>nc", "<cmd>NvimTreeClose<CR>", { desc = "Close tree" })
+	-- smart nvimtree focus
+	map("n", "<leader>n", function()
+		if vim.fn.bufname():match("NvimTree_") then
+			vim.cmd.wincmd("p")
+		else
+			vim.cmd("NvimTreeFocus")
+		end
+	end, { desc = "Focus tree" })
+	map("n", "<leader>No", "<cmd>NvimTreeOpen<CR>", { desc = "Open tree" })
+	map("n", "<leader>Nc", "<cmd>NvimTreeClose<CR>", { desc = "Close tree" })
 
 	map("n", ";", function()
 		vim.fn.feedkeys("q:", "n")
@@ -67,27 +76,31 @@ end
 function Keymap.set_nvimtree(map, unmap, api)
 	unmap("o")
 
-function Keymap.set_nvimtree(fn, api)
-	fn("l", api.node.open.edit, "Open")
-	fn("L", function()
+	map("L", function()
 		api.node.open.edit()
 		vim.schedule(function()
 			api.tree.focus()
 		end)
 	end, "Open: Without focus")
-	fn("h", api.node.navigate.parent_close, "Close directory")
-	fn("?", api.tree.toggle_help, "Toggle help")
-	fn("'", api.node.open.preview, "Preview")
-	fn("<tab>", api.marks.toggle, "Toggle bookmark")
+
+	map("l", api.node.open.edit, "Open")
+	map("h", api.node.navigate.parent_close, "Close directory")
+	map("'", api.node.open.preview, "Preview")
+
+	map("?", api.tree.toggle_help, "Toggle help")
+	map("<tab>", api.marks.toggle, "Toggle bookmark")
+
+	map("o", api.node.run.system, "Open with system")
 end
 
 function Keymap.get_snacks()
 	return {
 		{ "<leader><leader>", function() require("snacks").picker.smart() end,    desc = "Open picker" },
 		{ "<leader>ts",       function() require("snacks").terminal.toggle() end, desc = "Split with terminal" },
-		{ "<leader>fb",       function() require("snacks").picker.buffers() end,  desc = "Show buffers" },
+		{ "<leader>b",        function() require("snacks").picker.buffers() end,  desc = "Show buffers" },
 		{ "<leader>fg",       function() require("snacks").picker.grep() end,     desc = "Grep in files" },
 		{ "<leader>fd",       function() require("snacks").dashboard() end,       desc = "Open dashboard" },
+		{ "<F5>",             function() require("snacks").dashboard() end,       desc = "Open dashboard" },
 		{
 			"<leader>gi",
 			function()
@@ -145,6 +158,7 @@ end
 
 function Keymap.set_autosave(as)
 	local timeout = { timeout = 2000 }
+
 	vim.keymap.set("n", "<leader>es", function()
 		as.on()
 		vim.notify("Autosave: Enabled", vim.log.levels.INFO, timeout)
