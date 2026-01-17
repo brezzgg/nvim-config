@@ -64,18 +64,8 @@ function Keymap.get_debug()
 	}
 end
 
-function Keymap.get_bufferline()
-	return {
-		{ "gt",         "<Cmd>BufferLineCycleNext<CR>",  desc = "Next tab" },
-		{ "gT",         "<Cmd>BufferLineCyclePrev<CR>",  desc = "Prev tab" },
-		{ "<leader>bp", "<Cmd>BufferLineTogglePin<CR>",  desc = "Toggle Pin" },
-		{ "<leader>bb", "<Cmd>BufferLinePick<CR>",       desc = "Pick open" },
-		{ "<leader>bc", "<Cmd>BufferLinePickClose<CR>",  desc = "Pick close" },
-		{ "<leader>bC", "<Cmd>BufferLineCloseOther<CR>", desc = "Close other" },
-		{ "<leader>bh", "<Cmd>BufferLineCloseLeft<CR>",  desc = "Close other" },
-		{ "<leader>bl", "<Cmd>BufferLineCloseRight<CR>", desc = "Close other" },
-	}
-end
+function Keymap.set_nvimtree(map, unmap, api)
+	unmap("o")
 
 function Keymap.set_nvimtree(fn, api)
 	fn("l", api.node.open.edit, "Open")
@@ -150,20 +140,6 @@ function Keymap.get_snacks_dashboard()
 		{ icon = "󰒲", key = "L", desc = "Lazy", action = ":Lazy" },
 		{ icon = "", key = "M", desc = "Mason", action = ":Mason" },
 		{ icon = " ", key = "Q", desc = "Quit", action = ":qa" },
-	}
-end
-
-function Keymap.get_lsp()
-	return {
-		preset = "default",
-		["<C-space>"] = {},
-		["<C-p>"] = {},
-		["<Tab>"] = {},
-		["<S-Tab>"] = {},
-		["<C-y>"] = { "show", "show_documentation", "hide_documentation" },
-		["<C-n>"] = { "select_and_accept" },
-		["<C-k>"] = { "select_prev", "fallback" },
-		["<C-j>"] = { "select_next", "fallback" },
 	}
 end
 
