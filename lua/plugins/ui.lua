@@ -12,7 +12,10 @@ return {
 			"datsfilipe/min-theme.nvim",
 			"datsfilipe/vesper.nvim",
 			"everviolet/nvim",
-			"ramojus/mellifluous.nvim"
+			"ellisonleao/gruvbox.nvim",
+			"catppuccin/nvim",
+			"olivercederborg/poimandres.nvim",
+			"dgox16/oldworld.nvim",
 		}
 	},
 
