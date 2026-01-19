@@ -1,4 +1,5 @@
 require("config").pre()
+require("terminal").setup()
 
 require("bootstrap_lazy")
 require("lazy").setup("plugins")

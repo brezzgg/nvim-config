@@ -1,5 +1,15 @@
 local Terminal = {}
 
+function Terminal.setup()
+	vim.api.nvim_create_user_command("TerminalFloat", function()
+		Terminal.float_toggle()
+	end, {})
+
+	vim.api.nvim_create_user_command("TerminalBot", function()
+		Terminal.bot_toggle()
+	end, {})
+end
+
 local shell = vim.o.shell:gsub('^"', ''):gsub('"$', '')
 
 Terminal.float_buf = nil

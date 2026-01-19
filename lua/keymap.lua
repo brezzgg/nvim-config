@@ -56,12 +56,8 @@ function Keymap.default()
 	end, { desc = "Command history" })
 
 	-- terminal mod
-	map("n", "<leader>t", function()
-		require("terminal").float_toggle()
-	end, { desc = "Float terminal toggle" })
-	map("n", "<leader>T", function()
-		require("terminal").bot_toggle()
-	end, { desc = "Bot terminal toggle" })
+	map("n", "<leader>t", "<cmd>TerminalFloat<CR>", { desc = "Float terminal toggle" })
+	map("n", "<leader>T", "<cmd>TerminalBot<CR>", { desc = "Bot terminal toggle" })
 end
 
 function Keymap.set_cmp(cmp)
