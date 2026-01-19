@@ -130,6 +130,15 @@ function Keymap.get_snacks()
 	}
 end
 
+function Keymap.get_snacks_picker()
+	return {
+		["<C-d>"] = { "preview_scroll_down", mode = { "i", "n" } },
+		["<C-u>"] = { "preview_scroll_up", mode = { "i", "n" } },
+		["<C-l>"] = { "confirm", mode = { "i" } },
+		["l"] = { "confirm", mode = { "n" } },
+	}
+end
+
 function Keymap.get_snacks_dashboard()
 	return {
 		{

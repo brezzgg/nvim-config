@@ -34,6 +34,11 @@ return {
 						hidden = true,
 						ignored = true,
 					},
+				},
+				win = {
+					input = {
+						keys = require("keymap").get_snacks_picker(),
+					}
 				}
 			},
 
