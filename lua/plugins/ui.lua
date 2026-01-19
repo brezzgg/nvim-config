@@ -62,7 +62,22 @@ return {
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
-		opts = {},
+		opts = {
+			preset = "modern",
+			delay = 300,
+			win = {
+				width = { min = 30, max = 50 },
+				height = { min = 10 },
+				col = math.huge,
+				row = math.huge,
+				padding = { 1, 2 },
+			},
+			layout = {
+				width = { min = 30, max = 50 },
+				spacing = 3,
+				align = "left",
+			},
+		},
 	},
 
 	-- icons
