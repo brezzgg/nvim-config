@@ -28,7 +28,7 @@ function Keymap.default()
 	map("n", "gt", "<cmd>bnext<cr>", { noremap = true, silent = true, desc = "Next buffer" })
 	map("n", "gT", "<cmd>bprev<cr>", { noremap = true, silent = true, desc = "Prev buffer" })
 
-	map("n", "wh", "<cmd>WhichKey<cr>", { desc = "Global which key" })
+	map("n", "<leader>?", "<cmd>WhichKey<cr>", { desc = "Show which key" })
 
 	-- autoindent a
 	map("n", "a", function()
