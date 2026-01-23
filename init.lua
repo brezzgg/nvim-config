@@ -3,7 +3,8 @@ require("terminal").setup()
 
 require("bootstrap_lazy")
 require("lazy").setup("plugins")
-require("plugins_post")
+
+require("autocmd")
 
 require("config").post()
 require("keymap").default()
