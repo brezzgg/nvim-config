@@ -14,6 +14,10 @@ function Keymap.default()
 
 	map("n", "<C-w>q", "<cmd>q<CR>", { desc = "Quit" })
 
+	-- smartpaste
+	map({ "n", "v" }, "<C-p>", "<cmd>SmartPaste<cr>", { desc = "Smart paste" })
+	map("n", "<A-p>", "<cmd>SmartSelect<cr>", { desc = "Smart select" })
+
 	-- lsp
 	map("n", "C-K", "<cmd>lua vim.lsp.buf.hover()<CR>", { desc = "Object info" })
 	map("n", "gre", "<cmd>lua vim.diagnostic.open_float()<CR>", { desc = "Error info" })

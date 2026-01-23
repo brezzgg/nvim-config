@@ -1,5 +1,6 @@
 require("config").pre()
 require("terminal").setup()
+require("smart_paste").configure()
 
 require("bootstrap_lazy")
 require("lazy").setup("plugins")
