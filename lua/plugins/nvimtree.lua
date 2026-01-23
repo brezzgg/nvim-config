@@ -9,7 +9,7 @@ return {
 			git = {
 				enable = true,
 				ignore = false,
-				show_on_dirs = true,
+				show_on_dirs = false,
 				timeout = 400,
 			},
 			renderer = {
@@ -30,7 +30,7 @@ return {
 			},
 			diagnostics = {
 				enable = true,
-				show_on_dirs = true,
+				show_on_dirs = false,
 				show_on_open_dirs = true,
 				debounce_delay = 50,
 				severity = {

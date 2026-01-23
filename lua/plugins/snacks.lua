@@ -14,7 +14,6 @@ return {
 			input = { enabled = true },
 			quickfile = { enabled = true },
 			scope = { enabled = true },
-			scroll = { enabled = true },
 			statuscolumn = { enabled = true },
 			words = { enabled = true },
 
@@ -49,7 +48,7 @@ return {
 					keys = {
 						term_normal = {
 							"<esc>",
-							function ()
+							function()
 								vim.cmd("stopinsert")
 							end,
 							mode = "t",
@@ -62,6 +61,19 @@ return {
 				enabled = true,
 				timeout = 10000,
 			},
+
+			animate = {
+				fps = 144,
+			},
+			scroll = {
+				enabled = true,
+				animate = {
+					duration = {
+						step = 1,
+						total = 10,
+					}
+				},
+			}
 		},
 	}
 }
