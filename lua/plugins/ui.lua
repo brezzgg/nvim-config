@@ -58,10 +58,19 @@ return {
 		},
 	},
 
+	{
+		"lewis6991/gitsigns.nvim",
+		opts = {},
+	},
+
 	-- whichkey
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
+		init = function ()
+			vim.o.timeout = true
+			vim.o.timeoutlen = 300
+		end,
 		opts = {
 			preset = "modern",
 			delay = 300,

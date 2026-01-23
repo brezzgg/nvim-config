@@ -4,17 +4,22 @@ function Keymap.default()
 	local map = vim.keymap.set
 
 	map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true, desc = "Go to definition" })
-	map("n", "<leader>fo", "<cmd>lua vim.lsp.buf.format()<CR>", { noremap = true, silent = true, desc = "Format file" })
+	map("n", "<leader>fo", function()
+		local ft = vim.bo.filetype
+		if ft == "go" then
+			vim.cmd("GoFormat"); return
+		end
+		vim.cmd("lua vim.lsp.buf.format()")
+	end, { noremap = true, silent = true, desc = "Format file" })
 
 	map("n", "<C-w>q", "<cmd>q<CR>", { desc = "Quit" })
 
+	-- lsp
 	map("n", "C-K", "<cmd>lua vim.lsp.buf.hover()<CR>", { desc = "Object info" })
-	map("n", "<leader>ee", "<cmd>lua vim.diagnostic.open_float()<CR>", { desc = "Error info" })
-	map("n", "<leader>ed", "<cmd>lua vim.lsp.buf.declaration()<CR>", { desc = "Show declaration" })
-	map("n", "<leader>ei", "<cmd>lua vim.lsp.buf.implementation()<CR>", { desc = "Show implementation" })
-	map("n", "<leader>er", "<cmd>lua vim.lsp.buf.references()<CR>", { desc = "Show references" })
-	map("n", "<leader>en", "<cmd>lua vim.lsp.buf.rename()<CR>", { desc = "Rename" })
-	map("n", "<leader>et", "<cmd>lua vim.lsp.buf.type_definition()<CR>", { desc = "Type definition" })
+	map("n", "gre", "<cmd>lua vim.diagnostic.open_float()<CR>", { desc = "Error info" })
+	map("n", "grd", "<cmd>lua vim.lsp.buf.declaration()<CR>", { desc = "Show declaration" })
+	map("n", "<leader>re", "<cmd>lua vim.lsp.buf.rename()<CR>", { desc = "Rename" })
+	map("n", "<leader>cl", "<cmd>lua vim.lsp.codelens.run()<CR>", { desc = "Codelens run" })
 	map("n", "<leader>ew", "<cmd>wa<CR>", { desc = "Save all" })
 	map("n", "<leader>eW", "<cmd>wqa!<CR>", { desc = "Force save & quit" })
 	map("n", "<leader>eq", "<cmd>qa<CR>", { desc = "Quit all" })
@@ -58,6 +63,12 @@ function Keymap.default()
 	-- terminal mod
 	map("n", "<leader>t", "<cmd>TerminalFloat<CR>", { desc = "Float terminal toggle" })
 	map("n", "<leader>T", "<cmd>TerminalBot<CR>", { desc = "Bot terminal toggle" })
+
+	-- git
+	map("n", "<leader>ghh", "<cmd>Gitsigns preview_hunk<CR>", { desc = "Git hunk" })
+	map("n", "<leader>ghl", "<cmd>Gitsigns preview_hunk_inline<CR>", { desc = "Git hunk inline" })
+	map("n", "<leader>ghs", "<cmd>Gitsigns stage_hunk<CR>", { desc = "Git stage/unstage hunk" })
+	map("n", "<leader>gi", "<cmd>Gitsigns blame_line<CR>", { desc = "Git blame line" })
 end
 
 function Keymap.set_cmp(cmp)
@@ -109,14 +120,13 @@ end
 
 function Keymap.get_snacks()
 	return {
-		{ "<leader><leader>", function() require("snacks").picker.smart() end,    desc = "Open picker" },
-		{ "<leader>ts",       function() require("snacks").terminal.toggle() end, desc = "Split with terminal" },
-		{ "<leader>b",        function() require("snacks").picker.buffers() end,  desc = "Show buffers" },
-		{ "<leader>fg",       function() require("snacks").picker.grep() end,     desc = "Grep in files" },
-		{ "<leader>fd",       function() require("snacks").dashboard() end,       desc = "Open dashboard" },
-		{ "<F5>",             function() require("snacks").dashboard() end,       desc = "Open dashboard" },
+		{ "<leader><leader>", function() require("snacks").picker.smart() end,   desc = "Open picker" },
+		{ "<leader>b",        function() require("snacks").picker.buffers() end, desc = "Show buffers" },
+		{ "<leader>fg",       function() require("snacks").picker.grep() end,    desc = "Grep in files" },
+		{ "<leader>fd",       function() require("snacks").dashboard() end,      desc = "Open dashboard" },
+		{ "<F5>",             function() require("snacks").dashboard() end,      desc = "Open dashboard" },
 		{
-			"<leader>gi",
+			"<leader>G",
 			function()
 				require("snacks").lazygit(); vim.fn.feedkeys("i", "n")
 			end,
