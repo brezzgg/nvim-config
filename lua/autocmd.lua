@@ -25,6 +25,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
+-- yank highlight
+vim.api.nvim_create_autocmd('TextYankPost', {
+	pattern = '*',
+	callback = function()
+		vim.highlight.on_yank({ timeout = 170 })
+	end,
+	group = vim.api.nvim_create_augroup('YankHighlight', { clear = true }),
+})
+
 -- go disable package comment check
 local default_handler = vim.lsp.handlers["textDocument/publishDiagnostics"]
 vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, result, ctx, config)

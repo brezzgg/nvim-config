@@ -22,15 +22,6 @@ function Config.pre()
 	vim.g.loaded_netrw = 1
 	vim.g.loaded_netrwPlugin = 1
 
-	-- yank highlight
-	vim.api.nvim_create_autocmd('TextYankPost', {
-		pattern = '*',
-		callback = function()
-			vim.highlight.on_yank({ timeout = 170 })
-		end,
-		group = vim.api.nvim_create_augroup('YankHighlight', { clear = true }),
-	})
-
 	-- lsp
 	vim.diagnostic.config({ virtual_text = true })
 end
