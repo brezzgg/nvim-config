@@ -13,6 +13,10 @@ function Config.pre()
 	vim.opt.equalalways = false
 	vim.opt.guicursor = "a:block"
 
+	vim.opt.undofile = true
+	vim.opt.undolevels = 1000
+	vim.opt.undoreload = 10000
+
 	vim.g.mapleader = " "
 
 	vim.g.loaded_netrw = 1
@@ -32,9 +36,6 @@ function Config.pre()
 end
 
 function Config.post()
-	-- disable snacks animations
-	vim.g.snacks_animate = false
-
 	-- disable vim status bar
 	vim.opt.laststatus = 0
 	vim.opt.cmdheight = 0
