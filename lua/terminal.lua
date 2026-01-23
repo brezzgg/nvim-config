@@ -8,6 +8,40 @@ function Terminal.setup()
 	vim.api.nvim_create_user_command("TerminalBot", function()
 		Terminal.bot_toggle()
 	end, {})
+
+	local term_group = vim.api.nvim_create_augroup("TerminalFixPlugins", { clear = true })
+	vim.api.nvim_create_autocmd("TermLeave", {
+		group = term_group,
+		callback = function()
+			vim.schedule(function()
+				local buftype = vim.bo.buftype
+				if buftype ~= "terminal" then
+					local mode = vim.fn.mode()
+					if mode == "i" then
+						vim.cmd("doautocmd InsertEnter")
+					end
+				end
+			end)
+		end,
+	})
+	vim.api.nvim_create_autocmd({"BufWinEnter", "WinEnter"}, {
+		group = term_group,
+		pattern = "term://*",
+		callback = function()
+			vim.schedule(function()
+				vim.cmd("startinsert")
+			end)
+		end,
+	})
+	vim.api.nvim_create_autocmd({"BufWinLeave", "WinLeave"}, {
+		group = term_group,
+		pattern = "term://*",
+		callback = function()
+			if vim.fn.mode() == "t" then
+				vim.cmd("stopinsert")
+			end
+		end,
+	})
 end
 
 local shell = vim.o.shell:gsub('^"', ''):gsub('"$', '')
@@ -76,7 +110,11 @@ function Terminal.float_toggle()
 		border = "rounded",
 	})
 
-	vim.cmd("startinsert")
+	vim.schedule(function()
+		if vim.api.nvim_get_current_buf() == Terminal.float_buf then
+			vim.cmd("startinsert")
+		end
+	end)
 end
 
 Terminal.bot_buf = nil
@@ -85,7 +123,9 @@ Terminal.bot_win = nil
 function Terminal.bot_toggle()
 	if Terminal.bot_win and vim.api.nvim_win_is_valid(Terminal.bot_win) then
 		vim.api.nvim_set_current_win(Terminal.bot_win)
-		vim.cmd("startinsert")
+		vim.schedule(function()
+			vim.cmd("startinsert")
+		end)
 		return
 	end
 	if not Terminal.bot_buf or not vim.api.nvim_buf_is_valid(Terminal.bot_buf) then
@@ -138,7 +178,9 @@ function Terminal.bot_toggle()
 	Terminal.bot_win = vim.api.nvim_get_current_win()
 	vim.api.nvim_win_set_buf(Terminal.bot_win, Terminal.bot_buf)
 
-	vim.cmd("startinsert")
+	vim.schedule(function()
+		vim.cmd("startinsert")
+	end)
 end
 
 return Terminal
