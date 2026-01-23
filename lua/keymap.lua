@@ -74,14 +74,27 @@ function Keymap.default()
 		vim.fn.feedkeys("i", "n")
 	end, { desc = "Command history" })
 
-	-- terminal mod
+	-- terminal
 	map("n", "<leader>t", "<cmd>TerminalFloat<CR>", { desc = "Float terminal toggle" })
 	map("n", "<leader>T", "<cmd>TerminalBot<CR>", { desc = "Bot terminal toggle" })
+	map("n", "<A-t>", "<cmd>TerminalClose<CR>", { desc = "Terminal select" })
+	map("n", "<C-t>", "<cmd>TerminalSelect<CR>", { noremap = true, silent = true, desc = "Terminal select" })
 
 	-- git
+	map("n", "<leader>G", function()
+		local term = require("terminal")
+		term.custom_toggle("lazygit", term.type_float, {
+			cmd = "lazygit",
+			width = 0.85,
+			heigth = 0.85,
+			autoclose = true,
+		})
+	end)
 	map("n", "<leader>ghh", "<cmd>Gitsigns preview_hunk<CR>", { desc = "Git hunk" })
 	map("n", "<leader>ghl", "<cmd>Gitsigns preview_hunk_inline<CR>", { desc = "Git hunk inline" })
 	map("n", "<leader>ghs", "<cmd>Gitsigns stage_hunk<CR>", { desc = "Git stage/unstage hunk" })
+	map("n", "<leader>ghr", "<cmd>Gitsigns reset_hunk<CR>", { desc = "Git reset hunk" })
+	map("n", "<leader>gf", "<cmd>Gitsigns diffthis<CR>", { desc = "Git diff this" })
 	map("n", "<leader>gi", "<cmd>Gitsigns blame_line<CR>", { desc = "Git blame line" })
 end
 
@@ -134,23 +147,16 @@ end
 
 function Keymap.get_snacks()
 	return {
-		{ "<leader><leader>", function() require("snacks").picker.smart() end,   desc = "Open picker" },
-		{ "<leader>b",        function() require("snacks").picker.buffers() end, desc = "Show buffers" },
-		{ "<leader>fg",       function() require("snacks").picker.grep() end,    desc = "Grep in files" },
-		{ "<leader>fd",       function() require("snacks").dashboard() end,      desc = "Open dashboard" },
-		{ "<F5>",             function() require("snacks").dashboard() end,      desc = "Open dashboard" },
-		{
-			"<leader>G",
-			function()
-				require("snacks").lazygit(); vim.fn.feedkeys("i", "n")
-			end,
-			desc = "Open lazygit"
-		},
-		{ "<leader>gd", function() require("snacks").picker.git_diff() end,     desc = "Git diff" },
-		{ "<leader>gs", function() require("snacks").picker.git_status() end,   desc = "Git status" },
-		{ "<leader>gl", function() require("snacks").picker.git_log() end,      desc = "Git log" },
-		{ "<leader>gf", function() require("snacks").picker.git_files() end,    desc = "Git files" },
-		{ "<leader>gb", function() require("snacks").picker.git_branches() end, desc = "Git branches" },
+		{ "<leader><leader>", function() require("snacks").picker.smart() end,        desc = "Open picker" },
+		{ "<leader>b",        function() require("snacks").picker.buffers() end,      desc = "Show buffers" },
+		{ "<leader>fg",       function() require("snacks").picker.grep() end,         desc = "Grep in files" },
+		{ "<leader>fd",       function() require("snacks").dashboard() end,           desc = "Open dashboard" },
+		{ "<F5>",             function() require("snacks").dashboard() end,           desc = "Open dashboard" },
+		{ "<leader>gd",       function() require("snacks").picker.git_diff() end,     desc = "Git diff" },
+		{ "<leader>gs",       function() require("snacks").picker.git_status() end,   desc = "Git status" },
+		{ "<leader>gl",       function() require("snacks").picker.git_log() end,      desc = "Git log" },
+		{ "<leader>gf",       function() require("snacks").picker.git_files() end,    desc = "Git files" },
+		{ "<leader>gb",       function() require("snacks").picker.git_branches() end, desc = "Git branches" },
 	}
 end
 
