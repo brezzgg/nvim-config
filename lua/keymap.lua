@@ -20,20 +20,30 @@ function Keymap.default()
 	map("n", "grd", "<cmd>lua vim.lsp.buf.declaration()<CR>", { desc = "Show declaration" })
 	map("n", "<leader>re", "<cmd>lua vim.lsp.buf.rename()<CR>", { desc = "Rename" })
 	map("n", "<leader>cl", "<cmd>lua vim.lsp.codelens.run()<CR>", { desc = "Codelens run" })
+
+	-- save actions
 	map("n", "<leader>ew", "<cmd>wa<CR>", { desc = "Save all" })
 	map("n", "<leader>eW", "<cmd>wqa!<CR>", { desc = "Force save & quit" })
 	map("n", "<leader>eq", "<cmd>qa<CR>", { desc = "Quit all" })
 	map("n", "<leader>eQ", "<cmd>qa!<CR>", { desc = "Force quit all" })
 
+	-- resize
 	map("n", "<F1>", "<cmd>vertical resize -5<CR>", { desc = "Vertical resize -" })
 	map("n", "<F2>", "<cmd>vertical resize +5<CR>", { desc = "Vertical resize +" })
 	map("n", "<F3>", "<cmd>horizontal resize -5<CR>", { desc = "Horizontal resize -" })
 	map("n", "<F4>", "<cmd>horizontal resize +5<CR>", { desc = "Horizontal resize +" })
 
+	-- tabs
 	map("n", "gt", "<cmd>bnext<cr>", { noremap = true, silent = true, desc = "Next buffer" })
 	map("n", "gT", "<cmd>bprev<cr>", { noremap = true, silent = true, desc = "Prev buffer" })
 
+	-- whichkey
 	map("n", "<leader>?", "<cmd>WhichKey<cr>", { desc = "Show which key" })
+
+	-- command line
+	map("c", "<C-l>", "<CR>")
+	map("c", "<C-j>", "<down>")
+	map("c", "<C-k>", "<up>")
 
 	-- autoindent a
 	map("n", "a", function()
