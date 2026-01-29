@@ -199,7 +199,15 @@ function Keymap.get_snacks_dashboard()
 				vim.fn.feedkeys(":cd " .. vim.fn.getcwd(), "n")
 			end
 		},
-		{ icon = " ", key = "E", desc = "Explorer", action = "<cmd>NvimTreeOpen<CR>" },
+		{
+			icon = " ",
+			key = "S",
+			desc = "Sessions",
+			action = function()
+				require("persistence").select()
+			end
+		},
+		{ icon = " ", key = "P", desc = "Last session", action = function() require("persistence").load({ last = true }) end },
 		{ icon = " ", key = "R", desc = "Recent Files", action = "<cmd>lua Snacks.picker.recent()<CR>" },
 		{ icon = " ", key = "T", desc = "Select colorscheme", action = ":Themify" },
 		{ icon = "󰒲", key = "L", desc = "Lazy", action = ":Lazy" },

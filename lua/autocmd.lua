@@ -34,6 +34,19 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 	group = vim.api.nvim_create_augroup('YankHighlight', { clear = true }),
 })
 
+-- session nvimtree fix
+vim.api.nvim_create_autocmd("User", {
+	pattern = "PersistenceLoadPost",
+	callback = function()
+		require("nvim-tree.api").tree.toggle({ focus = false })
+
+		local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
+		if bufname ~= "" and not bufname:match("NvimTree") then
+			require("nvim-tree.api").tree.find_file(vim.fn.expand("%:p"))
+		end
+	end,
+})
+
 -- go disable package comment check
 local default_handler = vim.lsp.handlers["textDocument/publishDiagnostics"]
 vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, result, ctx, config)

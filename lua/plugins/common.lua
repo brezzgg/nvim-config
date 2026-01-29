@@ -23,4 +23,12 @@ return {
 		end
 	},
 
+	-- session
+	{
+		"folke/persistence.nvim",
+		event = "BufReadPre",
+		opts = {
+			branch = true,
+		},
+	}
 }
