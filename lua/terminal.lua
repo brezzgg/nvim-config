@@ -17,7 +17,7 @@ function Terminal.setup()
 		Terminal.close()
 	end, {})
 
-	local term_group = vim.api.nvim_create_augroup("TerminalFixPlugins", { clear = true })
+	local term_group = vim.api.nvim_create_augroup("TerminalGroup", { clear = true })
 	vim.api.nvim_create_autocmd("TermLeave", {
 		group = term_group,
 		callback = function()
