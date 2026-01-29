@@ -8,6 +8,7 @@ return {
 
 		opts = {
 			explorer = { enabled = false },
+			scroll = { enabled = false },
 
 			bigfile = { enabled = true },
 			indent = { enabled = true },
@@ -65,15 +66,6 @@ return {
 			animate = {
 				fps = 144,
 			},
-			scroll = {
-				enabled = true,
-				animate = {
-					duration = {
-						step = 1,
-						total = 10,
-					}
-				},
-			}
 		},
 	}
 }
