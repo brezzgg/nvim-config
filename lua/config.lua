@@ -12,6 +12,7 @@ function Config.pre()
 	vim.opt.cursorline = true
 	vim.opt.equalalways = false
 	vim.opt.guicursor = "a:block"
+	vim.opt.fillchars = { eob = " " }
 
 	vim.opt.undofile = true
 	vim.opt.undolevels = 1000
