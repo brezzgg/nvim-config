@@ -5,11 +5,7 @@ function Keymap.default()
 
 	map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true, desc = "Go to definition" })
 	map("n", "<leader>fo", function()
-		local ft = vim.bo.filetype
-		if ft == "go" then
-			vim.cmd("GoFormat"); return
-		end
-		vim.cmd("lua vim.lsp.buf.format()")
+		vim.lsp.buf.format({ async = true })
 	end, { noremap = true, silent = true, desc = "Format file" })
 
 	map("n", "<C-w>q", "<cmd>q<CR>", { desc = "Quit" })
@@ -124,8 +120,8 @@ function Keymap.get_debug()
 		{ "<leader>di", function() require("dap").step_into() end,         desc = "Step into" },
 		{ "<F8>",       function() require("dap").step_into() end,         desc = "Step into" },
 		{ "<leader>du", function() require("dapui").toggle() end,          desc = "Toggle debug ui" },
-		{ "<leader>dC", function() require("dapui").terminate() end,       desc = "Terminate" },
-		{ "<leader>dd", function() require("dapui").disconnect() end,      desc = "Disconnect" },
+		{ "<leader>dC", "<cmd>DapTerminate<CR>",                           desc = "Terminate" },
+		{ "<leader>dd", "<cmd>DapDisconnect<CR>",                          desc = "Disconnect" },
 	}
 end
 
