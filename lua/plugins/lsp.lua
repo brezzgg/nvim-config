@@ -22,12 +22,12 @@ return {
 					"lua_ls",
 					"rust_analyzer",
 					"gopls",
-					"golangci_lint_ls",
 					"jsonls",
 					"yamlls",
 					"lua_ls",
 					"gitlab_ci_ls",
 					"gh_actions_ls",
+					"protols",
 				},
 				automatic_installation = true,
 			})
@@ -38,45 +38,67 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
-		opts = {
-			servers = {
-				gopls = {
-					settings = {
-						gopls = {
-							codelenses = {
-								generate = true,
-								test = true,
-								tidy = true,
-								vendor = true,
-								upgrade_dependency = true,
-							},
-							analyses = {
-								packagepkg = false,
-								ST1000 = false,
-							},
-						},
-					},
-				},
-			},
-		},
+		opts = {},
 		config = function(_, opts)
-			local lspconfig = require("lspconfig")
-
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			local ok_cmp, cmp = pcall(require, "cmp_nvim_lsp")
 			if ok_cmp then
 				capabilities = cmp.default_capabilities(capabilities)
 			end
+		end,
+	},
 
-			require("mason-lspconfig").setup({
-				ensure_installed = vim.tbl_keys(opts.servers),
-				handlers = {
-					function(server_name)
-						local server_opts = opts.servers[server_name] or {}
-						server_opts.capabilities = capabilities
-						lspconfig[server_name].setup(server_opts)
-					end,
+	-- none ls
+	{
+		"nvimtools/none-ls.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+		event = { "BufReadPre", "BufNewFile" },
+		config = function()
+			local null_ls = require("null-ls")
+
+			local formatting = null_ls.builtins.formatting
+			local diagnostics = null_ls.builtins.diagnostics
+			local code_actions = null_ls.builtins.code_actions
+
+			null_ls.setup({
+				sources = {
+					diagnostics.golangci_lint.with({
+						args = {
+							"run",
+							"--out-format=json",
+							"--issues-exit-code=1",
+							"--path-prefix=$ROOT",
+							"--disable-all",
+							"--enable=errcheck",
+							"--enable=gosimple",
+							"--enable=govet",
+							"--enable=ineffassign",
+							"--enable=staticcheck",
+							"--enable=unused",
+							"$DIRNAME",
+						},
+						filetypes = { "go" },
+						timeout = 3000,
+					}),
+
+					formatting.gofumpt.with({
+						extra_args = { "-extra" },
+					}),
+
+					formatting.goimports_reviser.with({
+						extra_args = {
+							"-project-name", "github.com/yourorg",
+							"-rm-unused",
+						},
+					}),
+
+					code_actions.gomodifytags,
+					code_actions.impl,
 				},
+
+				debug = false,
 			})
 		end,
 	},
@@ -91,6 +113,34 @@ return {
 		cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
 	},
 
+	-- signature
+	{
+		"ray-x/lsp_signature.nvim",
+		event = "InsertEnter",
+		opts = {
+			bind = true,
+
+			handler_opts = {
+				border = "rounded"
+			},
+
+			floating_window = true,
+			floating_window_above_cur_line = true,
+
+			hi_parameter = "LspSignatureActiveParameter",
+
+			hint_enable = false,
+			max_height = 12,
+			max_width = 80,
+
+			toggle_key = nil,
+			select_signature_key = nil,
+		},
+		config = function(_, opts)
+			require("lsp_signature").setup(opts)
+		end,
+	},
+
 	-- nvimcmp
 	{
 		"hrsh7th/nvim-cmp",
@@ -99,22 +149,52 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-cmdline",
+			"L3MON4D3/LuaSnip",
 		},
 		config = function()
 			local cmp = require("cmp")
+			local luasnip = require("luasnip")
 
 			cmp.setup({
 				enabled = function()
 					return true
 				end,
+				snippet = {
+					expand = function(args)
+						luasnip.lsp_expand(args.body)
+					end,
+				},
+				window = {
+					documentation = cmp.config.window.bordered(),
+				},
 				mapping = cmp.mapping.preset.insert(require("keymap").set_cmp(cmp)),
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
 					{ name = "path" },
-				}, {
 					{ name = "buffer" },
 				}),
 			})
+			cmp.setup.cmdline(':', {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = cmp.config.sources({
+					{ name = 'path' }
+				}, {
+					{
+						name = 'cmdline',
+						option = {
+							ignore_cmds = { 'Man', '!' }
+						}
+					}
+				}),
+				matching = { disallow_symbol_nonprefix_matching = false }
+			})
+			cmp.setup.cmdline({ '/', '?' }, {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = {
+					{ name = 'buffer' }
+				}
+			})
 		end,
-	}
+	},
 }

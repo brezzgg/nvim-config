@@ -10,7 +10,7 @@ return {
 		gopls = {
 			gofumpt = true,
 			completeUnimported = true,
-			usePlaceholders = true,
+			usePlaceholders = false,
 			staticcheck = true,
 			semanticTokens = true,
 			hints = {
