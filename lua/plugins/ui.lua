@@ -16,6 +16,7 @@ return {
 			"catppuccin/nvim",
 			"olivercederborg/poimandres.nvim",
 			"dgox16/oldworld.nvim",
+			"vague-theme/vague.nvim",
 		}
 	},
 
