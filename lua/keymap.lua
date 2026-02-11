@@ -31,6 +31,9 @@ function Keymap.default()
 	map("n", "<leader>eq", "<cmd>qa<CR>", { desc = "Quit all" })
 	map("n", "<leader>eQ", "<cmd>qa!<CR>", { desc = "Force quit all" })
 
+	-- noh
+	map("n", "<leader>en", "<cmd>noh<CR>")
+
 	-- resize
 	map("n", "<F1>", "<cmd>vertical resize -5<CR>", { desc = "Vertical resize -" })
 	map("n", "<F2>", "<cmd>vertical resize +5<CR>", { desc = "Vertical resize +" })
@@ -112,16 +115,20 @@ end
 
 function Keymap.get_debug()
 	return {
-		{ "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle breakpoint" },
-		{ "<leader>dc", function() require("dap").continue() end,          desc = "Continue" },
-		{ "<F9>",       function() require("dap").continue() end,          desc = "Continue" },
-		{ "<leader>do", function() require("dap").step_over() end,         desc = "Step over" },
-		{ "<F7>",       function() require("dap").step_over() end,         desc = "Step over" },
-		{ "<leader>di", function() require("dap").step_into() end,         desc = "Step into" },
-		{ "<F8>",       function() require("dap").step_into() end,         desc = "Step into" },
-		{ "<leader>du", function() require("dapui").toggle() end,          desc = "Toggle debug ui" },
-		{ "<leader>dC", "<cmd>DapTerminate<CR>",                           desc = "Terminate" },
-		{ "<leader>dd", "<cmd>DapDisconnect<CR>",                          desc = "Disconnect" },
+		{ "<leader>db",  function() require("dap").toggle_breakpoint() end,                              desc = "Toggle breakpoint" },
+		{ "<leader>dc",  function() require("dap").continue() end,                                       desc = "Continue" },
+		{ "<F9>",        function() require("dap").continue() end,                                       desc = "Continue" },
+		{ "<leader>do",  function() require("dap").step_over() end,                                      desc = "Step over" },
+		{ "<F7>",        function() require("dap").step_over() end,                                      desc = "Step over" },
+		{ "<leader>di",  function() require("dap").step_into() end,                                      desc = "Step into" },
+		{ "<F8>",        function() require("dap").step_into() end,                                      desc = "Step into" },
+		{ "<leader>du",  function() require("dapui").toggle() end,                                       desc = "Toggle debug ui" },
+		{ "<leader>dss", function() require("dapui").float_element("scopes", { enter = true }) end,      desc = "Show scopes" },
+		{ "<leader>dsb", function() require("dapui").float_element("breakpoints", { enter = true }) end, desc = "Show breakpoint" },
+		{ "<leader>dsa", function() require("dapui").float_element("stacks", { enter = true }) end,      desc = "Show stacks" },
+		{ "<leader>dk",  function() require("dapui").eval() end,                                         desc = "Evaluate" },
+		{ "<leader>dC",  "<cmd>DapTerminate<CR>",                                                        desc = "Terminate" },
+		{ "<leader>dd",  "<cmd>DapDisconnect<CR>",                                                       desc = "Disconnect" },
 	}
 end
 
@@ -208,6 +215,7 @@ function Keymap.get_snacks_dashboard()
 			end
 		},
 		{ icon = " ", key = "P", desc = "Last session", action = function() require("persistence").load({ last = true }) end },
+		{ icon = " ", key = "D", desc = "Dir session", action = function() require("persistence").load() end },
 		{ icon = " ", key = "R", desc = "Recent Files", action = "<cmd>lua Snacks.picker.recent()<CR>" },
 		{ icon = " ", key = "T", desc = "Select colorscheme", action = ":Themify" },
 		{ icon = "󰒲", key = "L", desc = "Lazy", action = ":Lazy" },
