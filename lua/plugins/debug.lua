@@ -2,7 +2,7 @@ return {
 	{
 		"mfussenegger/nvim-dap",
 		dependencies = {
-			"leoluz/nvim-dap-go",
+			-- "leoluz/nvim-dap-go",
 			"rcarriga/nvim-dap-ui",
 			"nvim-neotest/nvim-nio",
 		},
@@ -13,7 +13,22 @@ return {
 			local dap = require("dap")
 			local dapui = require("dapui")
 
-			require("dap-go").setup()
+			dap.adapters.go = function(callback, _)
+				callback({
+					type = "server",
+					host = "127.0.0.1",
+					port = 38697,
+				})
+			end
+
+			dap.configurations.go = {
+				{
+					name = "Attach (headless dlv)",
+					type = "go",
+					request = "attach",
+					mode = "remote",
+				},
+			}
 			dapui.setup()
 		end,
 	},

@@ -59,30 +59,10 @@ return {
 			local null_ls = require("null-ls")
 
 			local formatting = null_ls.builtins.formatting
-			local diagnostics = null_ls.builtins.diagnostics
 			local code_actions = null_ls.builtins.code_actions
 
 			null_ls.setup({
 				sources = {
-					diagnostics.golangci_lint.with({
-						args = {
-							"run",
-							"--out-format=json",
-							"--issues-exit-code=1",
-							"--path-prefix=$ROOT",
-							"--disable-all",
-							"--enable=errcheck",
-							"--enable=gosimple",
-							"--enable=govet",
-							"--enable=ineffassign",
-							"--enable=staticcheck",
-							"--enable=unused",
-							"$DIRNAME",
-						},
-						filetypes = { "go" },
-						timeout = 3000,
-					}),
-
 					formatting.gofumpt.with({
 						extra_args = { "-extra" },
 					}),
